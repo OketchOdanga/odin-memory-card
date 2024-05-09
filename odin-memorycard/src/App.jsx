@@ -1,8 +1,11 @@
+// lib imports
 import { useState } from 'react'
-import './App.css'
-import Header from './Header';
-import { Cards } from './Cards';
 import {v4 as uuid} from 'uuid';
+// local imports
+import { Cards } from './Cards';
+import Header from './Header';
+// assets
+import './App.css'
 
 const pokemonList = [
   {name:'gengar',id: uuid()},
@@ -20,7 +23,7 @@ export default function App() {
   const[pokeCards,setPokeCards] = useState(pokemonList);
   const[clickedId, setClickedId] = useState([]);
 
-  //shuffles and updates score. 
+  //shuffles and updates score.
   const handleClick = (id) => {
     if(clickedId.includes(id)) {
       if (currentScore > highscore) {
@@ -32,7 +35,7 @@ export default function App() {
           // eslint-disable-next-line no-const-assign
           setCurrentScore(currentScore + 1);
           setClickedId([...clickedId, id]);
-          
+
         }
       const shuffleCards = [...pokeCards].sort(()=> Math.random() - 0.5);
       setPokeCards(shuffleCards);
