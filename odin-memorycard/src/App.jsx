@@ -1,35 +1,48 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Header from './Header';
+import { Cards } from './Cards';
+import {v4 as uuid} from 'uuid';
 
-function App() {
-  const [count, setCount] = useState(0)
+const pokemonList = [
+  {name:'gengar',id: uuid()},
+  {name:'ditto',id: uuid()},
+  {name:'pikachu',id: uuid()},
+  {name:'pidgey',id: uuid()},
+  {name:'roseia',id: uuid()},
+  {name:'squirtle',id: uuid()},
+  {name:'zapdos',id: uuid()}
+]
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+export default function App() {
+  const[currentScore,setCurrentScore] = useState(0);
+  const[highscore, setHighScore] = useState(0);
+  const[pokeCards,setPokeCards] = useState(pokemonList);
+  const[clickedId, setClickedId] = useState([]);
+
+  //shuffles and updates score. 
+  const handleClick = (id) => {
+    if(clickedId.includes(id)) {
+      if (currentScore > highscore) {
+          setHighScore(currentScore);
+        }
+          setCurrentScore(0);
+          setClickedId([]);
+        } else {
+          // eslint-disable-next-line no-const-assign
+          setCurrentScore(currentScore + 1);
+          setClickedId([...clickedId, id]);
+          
+        }
+      const shuffleCards = [...pokeCards].sort(()=> Math.random() - 0.5);
+      setPokeCards(shuffleCards);
+  }
+  return(
+    <section>
+      <Header currentscore={currentScore} highScore={highscore} />
+      <Cards cards={pokeCards} onClick={handleClick} />
+    </section>
   )
+
 }
 
-export default App
