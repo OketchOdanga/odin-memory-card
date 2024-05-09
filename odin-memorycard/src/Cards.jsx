@@ -10,7 +10,7 @@ export const Cards = ({cards, pokemon, onClick}) => {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/gengar`, {mode: 'cors'});
             const pokemonData = await response.json();
             setPoke(pokemonData)
-                    
+
         }
         getPokemons();
     },[pokemon])
@@ -18,18 +18,16 @@ export const Cards = ({cards, pokemon, onClick}) => {
     if (!poke) {
         return;
     }
-    
-    const imageSrc = poke.sprite.other['official-artwork'].front_default/* .front_default */;
-    
 
-    
+    const imageSrc = poke.sprites.other['official-artwork'].front_default/* .front_default */;
+
     return(
-        <section className="cards">             
+        <section className="cards">
            {/* eslint-disable-next-line react/prop-types */}
             {cards.map((card) => (
                 <button type="button" key={card.id} id={card.id} onClick={onClick}>
                     <img src={imageSrc} alt="pokemon"/>
-                    <span> {pokemon = card.name}</span> 
+                    <span> {pokemon = card.name}</span>
                 </button>
             ))}
         </section>
