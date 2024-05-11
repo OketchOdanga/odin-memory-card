@@ -10,8 +10,61 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width : 10px;
+}
+
+::-webkit-scrollbar-track {
+  background : #112240;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8892b0;
+}
+
 @layer utilities {
+  h1, h2, h3, h4 {
+    @apply text-heading text-purple-200 tracking-wider
+  }
+
   .app {
-    @apply font-main text-regular bg-blue-900 text-slate-50 min-h-screen w-screen p-4 text-left leading-loose
+    @apply font-main text-regular bg-sky-900 text-slate-100 min-h-screen w-full text-center leading-loose overflow-clip
+  }
+
+  .header, .main {
+    @apply flex flex-col gap-4 space-y-4
+  }
+
+  .header > article {
+    @apply space-y-4
+  }
+
+  .scores {
+    @apply flex gap-4 justify-between text-center
+  }
+
+  .scores > section {
+    @apply p-4 rounded-md shadow-lg space-y-3
+  }
+
+  .scores >  section > span {
+    @apply text-blue-600 font-extrabold text-[25px]
+  }
+
+  .cardlist {
+    @apply grid grid-cols-2 md:grid-cols-3 gap-5
+  }
+
+  .card, .loader {
+    @apply p-5 rounded-lg shadow flex flex-col items-center cursor-pointer hover:shadow-slate-500
+  }
+
+  .loader {
+    @apply animate-pulse font-extrabold
   }
 }

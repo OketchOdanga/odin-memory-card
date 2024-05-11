@@ -9,7 +9,7 @@ export default {
       main : ['Work Sans', 'sans-serif'],
     },
     fontSize : {
-      'heading' : ['25px', {
+      'heading' : ['22px', {
         fontWeight : '700'
       }],
       'regular' : ['18px', {
