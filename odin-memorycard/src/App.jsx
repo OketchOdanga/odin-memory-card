@@ -1,9 +1,10 @@
 // lib imports
 import { useState } from 'react'
-import {v4 as uuid} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 // local imports
 import { Cards } from './Cards';
-import {v4 as uuid} from 'uuid';
+import Header from './Header'
+
 
 const pokemonList = [
   {name:'gengar',id: uuidv4()},
@@ -24,7 +25,7 @@ export default function App() {
   //shuffles and updates score.
   const handleClick = (id) => {
     if(clickedId.includes(id)) {
-      if (currentScore > highscore) {
+      if (currentScore > highScore) {
           setHighScore(currentScore);
         }
           setCurrentScore(0);
@@ -41,15 +42,13 @@ export default function App() {
 
   return(
     <section>
-      <h2>POKEMON</h2>
+      
       <Header currentscore={currentScore} highscore={highScore} />
-      <section>
+      <section className='card-grid'>
         {pokeCards.map((card) => (
           <Cards key={card.id} pokemon={card.name}  cards={pokeCards} onClick={handleClick}/>
         ))}
-      </section>
-      
-      
+      </section>      
     </section>
   )
 

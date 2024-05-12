@@ -1,36 +1,38 @@
 import { useState,useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
-export const Cards = ({cards, pokemon, onClick}) => {
-    const[poke, setPoke] = useState('');
-    //mounts the cards on the screen.
-    useEffect(()=> {
-        async function getPokemons() {
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/gengar`, {mode: 'cors'});
-            const pokemonData = await response.json();
-            setPoke(pokemonData)
-                    
-        }
-        getPokemons();
-    },[pokemon])
+export  const Cards = ({pokemon, onClick}) => {
+    const[data, setData] = useState('');
+    //Effect to fetch data when the component mounts.
+    useEffect(() => {
+         //fetching data
+        const fetchData = async () => {
+            try {
+                //GET request using Fetch API
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`, {mode: 'cors'});
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                const result = await response.json();
 
-    if (!poke) {
-        return;
-    }
-    
-    const imageSrc = poke.sprite.other['official-artwork'].front_default/* .front_default */;
-    
+                //update state with the fetched data
+                setData(result);
+            
+            } catch (error) {
+                console.error('Error fetching data:', error.message)
+            
+            }
+        };
+        
+        fetchData()
+    },[pokemon]);
 
-    
+    const name = data.species.name;
+    const imageUrl = data.sprites.other['official-artwork'].front_default;   
     return(
-        <section className="cards">             
-           {/* eslint-disable-next-line react/prop-types */}
-            {cards.map((card) => (
-                <button type="button" key={card.id} id={card.id} onClick={onClick}>
-                    <img src={imageSrc} alt="pokemon"/>
-                    <span> {pokemon = card.name}</span> 
-                </button>
-            ))}
-        </section>
+        <button className="card" onClick={onClick}>
+            <img src={imageUrl} alt="poke"/>
+            <h4>{name}</h4>
+        </button>            
     )
 }
