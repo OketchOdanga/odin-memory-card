@@ -21,6 +21,7 @@ const PokeCard = ({ poke, clickAction }) => {
   const { name, url } = poke
   const [ pokeInfo, setPokeInfo ] = useState({})
   const [ loading, setLoading ] = useState(true)
+  const [ error, setError ] = useState("")
 
   useEffect(() => {
     fetch(url)
@@ -29,7 +30,7 @@ const PokeCard = ({ poke, clickAction }) => {
       setPokeInfo(d)
       setLoading(false)
     })
-    .catch(e => console.error(e))
+    .catch(e => { console.error(e); setError("")})
   },[url])
 
   // useEffect(() => {
@@ -44,16 +45,25 @@ const PokeCard = ({ poke, clickAction }) => {
   return (
     <div>
       {
-        loading ?
+        loading ? (
           <section className="loader">
             <h5> Loading ... </h5>
           </section>
-        :
-        <section className="card" onClick={() => clickAction(pokeInfo.id)}>
-          <img src={pokeInfo.sprites.front_default} className=""  alt="pokemon image"/>
-          <h5>{name}</h5>
-        </section>
-      }
+        ) : (
+        <div>
+          {
+            error !== "" ? (
+            <header>
+              <h2>{error}</h2>
+             </header>
+            ) : (
+            <section className="card" onClick={() => clickAction(pokeInfo.id)}>
+              <img src={pokeInfo.sprites.front_default} className=""  alt="pokemon image"/>
+              <h5>{name}</h5>
+            </section>
+          )}
+        </div>
+        )}
     </div>
   )
 }

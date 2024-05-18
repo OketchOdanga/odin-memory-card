@@ -15,6 +15,7 @@ export function MainDisplay() {
 
   const [ clickedIDs, setClickedIDs ] = useState([])
   const [ pokes, setPokes ] = useState([])
+  const [ error, setError ] = useState("")
 
   function shuffle(array) {
     let currentIndex = array.length;
@@ -58,13 +59,19 @@ export function MainDisplay() {
     fetch('https://pokeapi.co/api/v2/pokemon/')
     .then(r => r.json())
     .then(d => setPokes(d.results))
-    .catch(e => console.log(e))
+    .catch(e => { console.error(e); setError("Error Fetching Pokemon, Please refresh the page")})
   },[])
 
   return (
     <div className="main">
       <Header scoreDetails={scoreDetails} updateScoreDetails={setScoreDetails}/>
-      <CardList pokes={pokes} updatePokes={setPokes} clickAction={clickAction}/>
+      {
+        error !== "" ?
+        <header>
+          <h2>{error}</h2>
+        </header> :
+        <CardList pokes={pokes} updatePokes={setPokes} clickAction={clickAction}/>
+      }
     </div>
   )
 }
@@ -95,3 +102,9 @@ const Header = ({ scoreDetails }) => {
     </div>
   )
 }
+
+
+{/* <div className="main">
+<Header/>
+<CardList />
+</div> */}
